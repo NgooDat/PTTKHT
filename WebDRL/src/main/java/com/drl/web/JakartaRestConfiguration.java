@@ -1,4 +1,4 @@
-package com.mycompany.web;
+package com.drl.web;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

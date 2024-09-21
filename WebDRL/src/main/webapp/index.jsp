@@ -17,6 +17,7 @@
                 out.print("Bạn muốn đăng ảnh lên?");
                 %>
         </h1>
+        <h1>${SV}</h1>
         <button onclick="redirectToServlet()">Upload</button>
     </body>
 </html>
