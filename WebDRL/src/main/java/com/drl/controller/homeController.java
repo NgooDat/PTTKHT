@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.drl.daos.DRL_dao;
 import com.drl.daos.Giang_Vien_dao;
 import com.drl.daos.Khoa_Hoc_dao;
 import com.drl.daos.Khoa_dao;
@@ -43,14 +44,10 @@ public class homeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		String dateString = "2000-04-15";
+		
 		try {
-			Date date = formatter.parse(dateString);
-			Giang_Vien gv=new Giang_Vien("gv001","Phan Văn A", "Nam", date, "0717345678", "vanaphan@example.com", "123 Lê Lợi, Hà Nội", "Hà Nội", 16, "K01");
-			//Khoa kh=new Khoa_dao().getKhoa_by_ID("K01");
-			boolean isS=new Giang_Vien_dao().addGiangVien(gv);
-			
+			DRL_dao d=new DRL_dao();
+			boolean isS=d.updateDiem(1, "SV");
 			request.setAttribute("SV", isS);
 			RequestDispatcher rd= request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);

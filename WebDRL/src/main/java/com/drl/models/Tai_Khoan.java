@@ -6,6 +6,10 @@ public class Tai_Khoan {
     private String password;
     private int status;
     private int rulesID;
+    
+	public Tai_Khoan() {
+		super();
+	}
 	public int getId() {
 		return id;
 	}
@@ -36,5 +40,14 @@ public class Tai_Khoan {
 	public void setRulesID(int rulesID) {
 		this.rulesID = rulesID;
 	}
+	public Tai_Khoan(int id, String email, String password, int status, int rulesID) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.status = status;
+		this.rulesID = rulesID;
+	}
+	
     
 }

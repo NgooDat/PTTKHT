@@ -101,4 +101,43 @@ public class Sinh_Vien_dao {
 		return lsv;
 	}
 	
+	public void addSV(Sinh_Vien sv) {
+	    String sql = "INSERT INTO Sinh_Vien (ID, hoTen, gioiTinh, ngaySinh, sdt, diaChi, email, queQuan, LopID, Tai_KhoanID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	    
+	    try {
+	        conn = new DBConnect().getConnection();  // Kết nối đến cơ sở dữ liệu
+	        ps = conn.prepareStatement(sql);         // Sử dụng PrepareStatement để chống SQL Injection
+
+	        // Thiết lập các giá trị cho các dấu ?
+	        ps.setString(1, sv.getId());                // Mã sinh viên
+	        ps.setString(2, sv.getHoTen());             // Họ tên
+	        ps.setString(3, sv.getGioiTinh());          // Giới tính
+	        ps.setDate(4, new java.sql.Date(sv.getNgaySinh().getTime())); // Ngày sinh
+	        ps.setString(5, sv.getSdt());               // Số điện thoại
+	        ps.setString(6, sv.getDiaChi());            // Địa chỉ
+	        ps.setString(7, sv.getEmail());             // Email
+	        ps.setString(8, sv.getQueQuan());           // Quê quán
+	        ps.setString(9, sv.getLopID());             // Mã lớp
+	        ps.setInt(10, sv.getTaiKhoanID());         // Mã tài khoản
+
+	        // Thực thi lệnh SQL để thêm dữ liệu vào cơ sở dữ liệu
+	        ps.executeUpdate(); 
+	        
+	        System.out.println("Thêm sinh viên thành công!");
+
+	    } catch (Exception e) {
+	        e.printStackTrace();  // Bắt lỗi và in ra nếu có
+	    } finally {
+	        // Đóng kết nối
+	        try {
+	            if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+
+	
 }

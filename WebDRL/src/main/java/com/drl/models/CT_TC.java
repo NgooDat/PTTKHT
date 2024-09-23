@@ -3,9 +3,22 @@ package com.drl.models;
 public class CT_TC {
 	private int id;
     private String noiDung;
-    private Integer diemTD;
-    private Integer diem;
+    private int diemTD;
     private int tieuChiID;
+    
+	public CT_TC() {
+		super();
+	}
+	
+	public CT_TC(int id, String noiDung, int diemTD, int tieuChiID) {
+		super();
+		this.id = id;
+		this.noiDung = noiDung;
+		this.diemTD = diemTD;
+
+		this.tieuChiID = tieuChiID;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -18,17 +31,11 @@ public class CT_TC {
 	public void setNoiDung(String noiDung) {
 		this.noiDung = noiDung;
 	}
-	public Integer getDiemTD() {
+	public int getDiemTD() {
 		return diemTD;
 	}
-	public void setDiemTD(Integer diemTD) {
+	public void setDiemTD(int diemTD) {
 		this.diemTD = diemTD;
-	}
-	public Integer getDiem() {
-		return diem;
-	}
-	public void setDiem(Integer diem) {
-		this.diem = diem;
 	}
 	public int getTieuChiID() {
 		return tieuChiID;

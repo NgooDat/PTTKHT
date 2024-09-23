@@ -95,4 +95,39 @@ public class Giang_Vien_dao {
 		return isSucess;
 	}
 
+	// Hàm cập nhật thông tin giảng viên
+		public boolean updateGiangVien(Giang_Vien gv) {
+		    String qr = "UPDATE Giang_Vien SET hoTen = ?, gioiTinh = ?, ngaySinh = ?, sdt = ?, email = ?, diaChi = ?, queQuan = ?, Tai_KhoanID = ?, KhoaID = ? WHERE ID = ?";
+		    boolean isSuccess = false;
+
+		    try {
+		        conn = new DBConnect().getConnection();
+		        ps = conn.prepareStatement(qr);
+		        
+		        // Đặt các tham số cho câu truy vấn
+		        ps.setString(1, gv.getHoTen());             // Đặt giá trị hOTen
+		        ps.setString(2, gv.getGioiTinh());          // Đặt giá trị gioiTinh
+		        ps.setDate(3, new java.sql.Date(gv.getNgaySinh().getTime()));  // Đặt giá trị ngaySinh
+		        ps.setString(4, gv.getSdt());               // Đặt giá trị sdt
+		        ps.setString(5, gv.getEmail());             // Đặt giá trị email
+		        ps.setString(6, gv.getDiaChi());            // Đặt giá trị diaChi
+		        ps.setString(7, gv.getQueQuan());           // Đặt giá trị queQuan
+		        ps.setInt(8, gv.getTaiKhoanID());          // Đặt giá trị Tai_KhoanID
+		        ps.setString(9, gv.getKhoaID());            // Đặt giá trị KhoaID
+		        ps.setString(10, gv.getId());                  // Đặt giá trị ID của giảng viên (để xác định bản ghi nào cần cập nhật)
+
+		        // Thực thi câu lệnh và kiểm tra xem có cập nhật thành công không
+		        isSuccess = ps.executeUpdate() > 0;
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            if (ps != null) ps.close();
+		            if (conn != null) conn.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+		    return isSuccess;
+		}
 }

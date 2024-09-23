@@ -2,41 +2,40 @@ package com.drl.models;
 
 public class DRL {
 	private int id;
-    private Integer diemSV;
-    private Integer diemCS;
-    private Integer diemCV;
-    private Integer status;
+    private int diemSV;
+    private int diemCS;
+    private int diemCV;
+    private int status;
     private String sinhVienID;
     private int hkNkID;
-    private int tieuChiID;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Integer getDiemSV() {
+	public int getDiemSV() {
 		return diemSV;
 	}
-	public void setDiemSV(Integer diemSV) {
+	public void setDiemSV(int diemSV) {
 		this.diemSV = diemSV;
 	}
-	public Integer getDiemCS() {
+	public int getDiemCS() {
 		return diemCS;
 	}
-	public void setDiemCS(Integer diemCS) {
+	public void setDiemCS(int diemCS) {
 		this.diemCS = diemCS;
 	}
-	public Integer getDiemCV() {
+	public int getDiemCV() {
 		return diemCV;
 	}
-	public void setDiemCV(Integer diemCV) {
+	public void setDiemCV(int diemCV) {
 		this.diemCV = diemCV;
 	}
-	public Integer getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(Integer status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	public String getSinhVienID() {
@@ -51,11 +50,4 @@ public class DRL {
 	public void setHkNkID(int hkNkID) {
 		this.hkNkID = hkNkID;
 	}
-	public int getTieuChiID() {
-		return tieuChiID;
-	}
-	public void setTieuChiID(int tieuChiID) {
-		this.tieuChiID = tieuChiID;
-	}
-    
 }
