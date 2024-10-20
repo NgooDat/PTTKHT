@@ -18,6 +18,13 @@ public class CT_TC {
 
 		this.tieuChiID = tieuChiID;
 	}
+	
+	public CT_TC(String noiDung, int diemTD, int tieuChiID) {
+		super();
+		this.noiDung = noiDung;
+		this.diemTD = diemTD;
+		this.tieuChiID = tieuChiID;
+	}
 
 	public int getId() {
 		return id;

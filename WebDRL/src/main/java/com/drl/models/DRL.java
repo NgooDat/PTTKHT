@@ -8,6 +8,31 @@ public class DRL {
     private int status;
     private String sinhVienID;
     private int hkNkID;
+    
+    
+    
+	public DRL(int diemSV, int diemCS, int diemCV, int status, String sinhVienID, int hkNkID) {
+		super();
+		this.diemSV = diemSV;
+		this.diemCS = diemCS;
+		this.diemCV = diemCV;
+		this.status = status;
+		this.sinhVienID = sinhVienID;
+		this.hkNkID = hkNkID;
+	}
+	public DRL(int id, int diemSV, int diemCS, int diemCV, int status, String sinhVienID, int hkNkID) {
+		super();
+		this.id = id;
+		this.diemSV = diemSV;
+		this.diemCS = diemCS;
+		this.diemCV = diemCV;
+		this.status = status;
+		this.sinhVienID = sinhVienID;
+		this.hkNkID = hkNkID;
+	}
+	public DRL() {
+		super();
+	}
 	public int getId() {
 		return id;
 	}

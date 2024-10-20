@@ -73,11 +73,50 @@ public class Khoa_dao {
             ps.setDate(3, new java.sql.Date(khoa.getNgayTL().getTime()));  // Đặt ngày thành lập
             ps.setInt(4, khoa.getStatus());          // Đặt trạng thái (status)
 
-            // Thực thi câu lệnh và kiểm tra xem có thêm thành công không
-            isSuccess = ps.executeUpdate() > 0;
-        } catch (ClassNotFoundException | SQLException e) {
-        }
-        return isSuccess;
-    }
-
+		        // Thực thi câu lệnh và kiểm tra xem có thêm thành công không
+		        isSuccess = ps.executeUpdate() > 0;
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    return isSuccess;
+		}
+		
+		// cap nhat khoa
+		public boolean updateKhoa(Khoa khoa) {
+		    String sql = "UPDATE Khoa SET ten = ?, ngayTL = ?, status = ? WHERE ID = ?";
+		    try {
+		        conn = new DBConnect().getConnection();
+		        ps = conn.prepareStatement(sql);
+		        ps.setString(1, khoa.getTen());       // Update the department name
+		        ps.setDate(2, new java.sql.Date(khoa.getNgayTL().getTime()));  // Update the establishment date
+		        ps.setInt(3, khoa.getStatus());       // Update the status
+		        ps.setString(4, khoa.getId());        // Specify the ID of the department to update
+		        int rowsUpdated = ps.executeUpdate();
+		        if (rowsUpdated > 0) {
+		            return true;  // Nếu cập nhật thành công
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } 
+		    return false;
+		}
+		
+		// xoa khoa
+		public boolean deleteKhoa(String id) {
+		    String sql = "DELETE FROM Khoa WHERE ID = ?";
+		    try {
+		        conn = new DBConnect().getConnection();
+		        ps = conn.prepareStatement(sql);
+		        ps.setString(1, id);  // Xác định ID của khoa cần xóa
+		        int rowsDeleted = ps.executeUpdate();
+		        
+		        if (rowsDeleted > 0) {
+		            return true;  // Nếu xóa thành công
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } 
+		    return false;  // Nếu xóa thất bại
+		}
 }
+//@@te

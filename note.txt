@@ -1,0 +1,23 @@
+note:
+
+Bảng Rules(quyền cho tài khoản)
+1	trường
+2	khoa
+3	giảng viên
+4	ban cán sự
+5	sinh viên
+
+Bảng TaiKhoan thì status
+1 đã khóa
+0 hoạt động
+
+Bảng Khoa  status
+1 ngưng dạy
+0 hoạt động
+
+
+- trường TongDiem ở bảng Tieu_Chi sẽ tự động cập nhật theo CT_TC
+
+- trường capDG chọn 1 trong 3 cấp sau: SV, CV (cố vấn), CS (cán sự)
+
+- các trường diemSV, diemCS, diemCV ở bảng DRL sẽ tự động cập nhật dựa trên thông tin diem và capDG ở bảng Diem_CT

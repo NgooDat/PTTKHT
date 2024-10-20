@@ -20,6 +20,15 @@ public class Diem_CT {
 		DRLID = dRLID;
 		CT_TCID = cT_TCID;
 	}
+	
+
+	public Diem_CT(int diem, String capDG, int dRLID, int cT_TCID) {
+		super();
+		this.diem = diem;
+		this.capDG = capDG;
+		DRLID = dRLID;
+		CT_TCID = cT_TCID;
+	}
 
 	public int getId() {
 		return id;

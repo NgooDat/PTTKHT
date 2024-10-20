@@ -6,6 +6,8 @@ import com.drl.models.Lop;
 import com.drl.models.Khoa;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +25,7 @@ public class khoa_lop extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        ArrayList<Lop> lop = new Lop_dao().getAllLop();
+        List<Lop> lop = new Lop_dao().getAllLop();
         request.setAttribute("lopList", lop);
         
         ArrayList<Khoa> khoa = new Khoa_dao().getAllKhoa();

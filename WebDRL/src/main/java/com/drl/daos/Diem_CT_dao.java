@@ -13,10 +13,10 @@ public class Diem_CT_dao {
 	PreparedStatement ps=null;
 	ResultSet rs=null;
 	
-	//lay danh sach diem cua sv theo cấp đánh giá 
+	//lay danh sach diem cua sv theo cấp đánh giá và drlID
 	public List<Diem_CT> getDiem_CT_by_capDG_DRLID(String cap, int id){
 		List<Diem_CT> lst =new ArrayList<Diem_CT>();
-		String qr="select * from Diem_CT where capDG=? DRLID=?";
+		String qr="select * from Diem_CT where capDG=? AND DRLID=?";
 		try {
 			conn=new DBConnect().getConnection();
 			ps=conn.prepareStatement(qr);
@@ -34,9 +34,12 @@ public class Diem_CT_dao {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return lst;
 	}
+	
+	//them điểm chi tiết
 	public boolean addDiem_CT(Diem_CT d) {
 	    boolean result = false;
 	    String sql = "INSERT INTO Diem_CT (diem, DRLID, CT_TCID, capDG) VALUES (?, ?, ?, ?)";
@@ -44,10 +47,7 @@ public class Diem_CT_dao {
 	    try {
 	        // Kết nối đến cơ sở dữ liệu
 	        conn = new DBConnect().getConnection();
-	        // Chuẩn bị câu lệnh SQL
 	        ps = conn.prepareStatement(sql);
-	        
-	        // Thiết lập các giá trị cho câu lệnh SQL
 	        ps.setInt(1, d.getDiem());        // Điểm của tiêu chí cụ thể
 	        ps.setInt(2, d.getDRLID());       // ID của DRL
 	        ps.setInt(3, d.getCT_TCID());     // ID của CT_TC
@@ -59,7 +59,55 @@ public class Diem_CT_dao {
 	        e.printStackTrace();
 	    }
 	    
-	    return result;  // Trả về kết quả (true nếu thành công, false nếu không)
+	    return result;  
+	}
+	
+	//sửa điểm chi tiết
+	public boolean updateDiem_CT(Diem_CT d) {
+	    String query = "UPDATE Diem_CT SET diem = ? WHERE ID = ?";
+	    try {
+	        conn = new DBConnect().getConnection(); // Mở kết nối
+	        ps = conn.prepareStatement(query); // Chuẩn bị câu lệnh SQL
+	        ps.setInt(1, d.getDiem()); // Gán giá trị điểm từ đối tượng Diem_CT
+	        ps.setInt(2, d.getId());   // Gán giá trị ID từ đối tượng Diem_CT
+	        int rowsUpdated = ps.executeUpdate(); // Thực thi câu lệnh UPDATE
+	        
+	        return rowsUpdated > 0; // Trả về true nếu cập nhật thành công
+	    } catch (Exception e) {
+	        e.printStackTrace(); // Xử lý ngoại lệ
+	        return false; // Trả về false nếu có lỗi
+	    } finally {
+	        try {
+	            if (ps != null) ps.close(); // Đóng PreparedStatement
+	            if (conn != null) conn.close(); // Đóng kết nối
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
 	}
 
+	//xoa diem chi tiet
+	public boolean deleteDiem_CT(int id) {
+	    String query = "DELETE FROM Diem_CT WHERE ID = ?";
+	    try {
+	        conn = new DBConnect().getConnection(); // Mở kết nối
+	        ps = conn.prepareStatement(query); // Chuẩn bị câu lệnh SQL
+	        ps.setInt(1, id); // Gán giá trị ID vào câu lệnh SQL
+	        int rowsDeleted = ps.executeUpdate(); // Thực thi câu lệnh DELETE
+	        
+	        return rowsDeleted > 0; // Trả về true nếu xóa thành công
+	    } catch (Exception e) {
+	        e.printStackTrace(); // Xử lý ngoại lệ
+	        return false; // Trả về false nếu có lỗi
+	    } finally {
+	        try {
+	            if (ps != null) ps.close(); // Đóng PreparedStatement
+	            if (conn != null) conn.close(); // Đóng kết nối
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
 }
+//te@@
