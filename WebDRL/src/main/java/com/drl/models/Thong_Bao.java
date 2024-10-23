@@ -68,4 +68,30 @@ public class Thong_Bao {
         this.hkNkID = hkNkID;
     }
 
+	public Thong_Bao() {
+		super();
+	}
+
+	public Thong_Bao(int id, Date ngayBD, Date ngayKT_SV, Date ngayKT_CS, Date ngayKT_CV, Date ngayKT_Khoa,
+			int hkNkID) {
+		super();
+		this.id = id;
+		this.ngayBD = ngayBD;
+		this.ngayKT_SV = ngayKT_SV;
+		this.ngayKT_CS = ngayKT_CS;
+		this.ngayKT_CV = ngayKT_CV;
+		this.ngayKT_Khoa = ngayKT_Khoa;
+		this.hkNkID = hkNkID;
+	}
+
+	public Thong_Bao(Date ngayBD, Date ngayKT_SV, Date ngayKT_CS, Date ngayKT_CV, Date ngayKT_Khoa, int hkNkID) {
+		super();
+		this.ngayBD = ngayBD;
+		this.ngayKT_SV = ngayKT_SV;
+		this.ngayKT_CS = ngayKT_CS;
+		this.ngayKT_CV = ngayKT_CV;
+		this.ngayKT_Khoa = ngayKT_Khoa;
+		this.hkNkID = hkNkID;
+	}
+
 }

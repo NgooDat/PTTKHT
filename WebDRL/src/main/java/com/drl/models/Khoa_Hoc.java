@@ -32,6 +32,11 @@ public class Khoa_Hoc {
 		this.namBD = namBD;
 		this.namKT = namKT;
 	}
+	public Khoa_Hoc(int namBD, int namKT) {
+		super();
+		this.namBD = namBD;
+		this.namKT = namKT;
+	}
 	
     
 }

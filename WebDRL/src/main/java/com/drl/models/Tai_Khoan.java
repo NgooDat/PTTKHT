@@ -48,6 +48,20 @@ public class Tai_Khoan {
 		this.status = status;
 		this.rulesID = rulesID;
 	}
+	public Tai_Khoan(String email, String password, int status, int rulesID) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.status = status;
+		this.rulesID = rulesID;
+	}
+	public Tai_Khoan(int id, String email, int status, int rulesID) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.status = status;
+		this.rulesID = rulesID;
+	}
 	
     
 }

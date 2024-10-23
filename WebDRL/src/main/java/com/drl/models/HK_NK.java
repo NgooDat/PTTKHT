@@ -29,5 +29,21 @@ public class HK_NK {
 	public void setXet(int xet) {
 		this.xet = xet;
 	}
+	public HK_NK() {
+		super();
+	}
+	public HK_NK(int id, String nienKhoa, int hocKy, int xet) {
+		super();
+		this.id = id;
+		this.nienKhoa = nienKhoa;
+		this.hocKy = hocKy;
+		this.xet = xet;
+	}
+	public HK_NK(String nienKhoa, int hocKy, int xet) {
+		super();
+		this.nienKhoa = nienKhoa;
+		this.hocKy = hocKy;
+		this.xet = xet;
+	}
     
 }
