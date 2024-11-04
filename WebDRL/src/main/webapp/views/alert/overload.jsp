@@ -10,7 +10,7 @@
             window.onload = function() {
 
                 // Hộp thoại xác nhận tự động hiển thị khi tải trang
-                if (confirm("Đổi mật khẩu thành công!?")) {
+                if (confirm("Lỗi kết nối hệ thống! XIn truy cập lại ít phút?")) {
                     window.location.href = "login"; // Đường dẫn đến trang đăng nhập
                 }
             };
@@ -32,6 +32,6 @@
         </style>
     </head>
     <body>
-        
+        <img src="images/404.png">
     </body>
 </html>
