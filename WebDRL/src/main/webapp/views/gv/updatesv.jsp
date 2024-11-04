@@ -320,7 +320,7 @@
                                                 </div>
                                                 <input name="phone" class="input-item item" type="text" placeholder="Số điện thoại" value="<%=sv.getSdt()%>">
                                             </div>
-                                            <div class="time-items item">
+                                            <div style="display: none" class="time-items item">
                                                 <div class="labellabel">
                                                     <label class="label-iteam label2">Mật khẩu: </label>
                                                 </div>

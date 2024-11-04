@@ -1,3 +1,5 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.UUID"%>
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.concurrent.ExecutionException"%>
@@ -306,11 +308,11 @@
                                         <option value="school_lop?khoaId=allKhoa" <%= selected%>>Tất cả</option>
                                         <%
                                             // Lấy danh sách khoa từ request
-                                            ArrayList<Khoa> khoaList = (ArrayList<Khoa>) request.getAttribute("khoaList");
+                                            ArrayList<Khoa> khoaList2 = (ArrayList<Khoa>) request.getAttribute("khoaList");
 
                                             // Kiểm tra nếu khoaList không null
-                                            if (khoaList != null) {
-                                                for (Khoa khoa : khoaList) {
+                                            if (khoaList2 != null) {
+                                                for (Khoa khoa : khoaList2) {
                                                     selected = (khoa.getId().equals(selectedKhoaId)) ? "selected" : "";
                                         %>
                                         <option value="school_lop?khoaId=<%=khoa.getId()%>" <%= selected%>><%=khoa.getTen()%></option>
@@ -367,18 +369,46 @@
                                 <li id="original-div5" class="main-table-item">
 
                                     <%
-                                        int i = 1;
-                                        Object obj = request.getAttribute("lopList");
-                                        if (obj instanceof ArrayList<?>) {
-                                            ArrayList<?> lopList = (ArrayList<?>) obj;
-                                            if (lopList != null && !lopList.isEmpty()) {
-                                                for (Object o : lopList) {
-                                                    if (o instanceof Lop) {
-                                                        Lop lop = (Lop) o;
+                                        // Lấy thông tin chung từ request
+                                        ArrayList<?> lopList = (ArrayList<?>) request.getAttribute("lopList");
+                                        ArrayList<Khoa> khoaList = (ArrayList<Khoa>) request.getAttribute("khoaList");
+                                        ArrayList<Khoa_Hoc> khList1 = (ArrayList<Khoa_Hoc>) request.getAttribute("khList");
+                                        String idlop = request.getParameter("idlop");
 
+                                        // Tạo Map cho khoa và giảng viên
+                                        Map<String, Khoa> khoaMap = new HashMap<String, Khoa>();
+                                        Map<String, ArrayList<Giang_Vien>> gvMap = new HashMap<>();
+
+                                        // Điền thông tin vào map cho khoa
+                                        if (khoaList != null) {
+                                            for (Khoa k : khoaList) {
+                                                khoaMap.put(k.getId(), k);
+                                            }
+                                        }
+
+                                        // Điền thông tin vào map cho giảng viên
+                                        for (Object o : lopList) {
+                                            if (o instanceof Lop) {
+                                                Lop lop = (Lop) o;
+                                                ArrayList<Giang_Vien> gvList = (ArrayList<Giang_Vien>) new Giang_Vien_dao().getGiangVien_by_KhoaID(lop.getKhoaID());
+                                                gvMap.put(lop.getId(), gvList);
+                                            }
+                                        }
+
+                                        // Lặp qua danh sách lớp
+                                        int i = 1;
+                                        if (lopList != null && !lopList.isEmpty()) {
+                                            for (Object o : lopList) {
+                                                if (o instanceof Lop) {
+                                                    Lop lop = (Lop) o;
+                                                    Khoa kh_se = idlop != null && idlop.equals(lop.getId())
+                                                            ? (Khoa) request.getAttribute("khse")
+                                                            : khoaMap.get(lop.getKhoaID());
+
+                                                    ArrayList<Giang_Vien> gvList = gvMap.get(lop.getId());
                                     %>
                                     <form action="school_lop" method="get">
-                                        <ul id ="wrap<%=i%>" class="table-header-list">
+                                        <ul id="wrap<%=i%>" class="table-header-list">
                                             <input name="option2" value="<%=selectedKhoaId%>" type="hidden">
                                             <input name="lopcu" value="<%=lop.getId()%>" type="hidden">
                                             <input name="wrap" value="wrap<%=i%>" type="hidden">
@@ -390,27 +420,14 @@
                                                 <input name="lopid" class="button none-button width_2 width_text" value="<%= lop.getTen()%>">
                                             </li>
                                             <li class="table-header-item table-item-content width_3 padding-title">
-                                                <select  name ="khoamoi" class="select-covan" onchange="if (this.value) {
-                                                            location = this.value;
-                                                        }">
+                                                <select name="khoamoi" class="select-covan" onchange="loadGiangVien(this.value, 'gvmoi<%=i%>')">
+                                    
                                                     <%
-                                                        String idlop = request.getParameter("idlop");
-                                                        Khoa kh_se;
-                                                        if (idlop != null && idlop.equals(lop.getId())) {
-                                                            kh_se = (Khoa) request.getAttribute("khse");
-                                                        } else {
-                                                            kh_se = new Khoa_dao().getKhoa_by_ID(lop.getKhoaID());
-                                                        }
-
-                                                        // Lấy danh sách khoa từ request
-                                                        ArrayList<Khoa> khoaL = (ArrayList<Khoa>) request.getAttribute("khoaList");
-
-                                                        // Kiểm tra nếu khoaList không null
-                                                        if (khoaL != null) {
-                                                            for (Khoa k : khoaL) {
+                                                        if (khoaList != null) {
+                                                            for (Khoa k : khoaList) {
                                                                 selected = (k.getId().equals(kh_se.getId())) ? "selected" : "";
                                                     %>
-                                                    <option value="school_lop?wrap=wrap<%=i%>&option=<%=selectedKhoaId%>&ido=<%=lop.getKhoaID()%>&idse=<%=k.getId()%>&idlop=<%=lop.getId()%>" <%= selected%> >  <%= k.getTen()%>
+                                                    <option value="<%=k.getId()%>" <%= selected%>> <%= k.getTen()%>
                                                     </option>
                                                     <%
                                                             }
@@ -419,28 +436,13 @@
                                                 </select>
                                             </li>
                                             <li class="table-header-item table-item-content width_4 padding-title">
-
-                                                <select name="gvmoi" class="select-covan" >
+                                                <select name="gvmoi" id="gvmoi<%=i%>" class="select-covan">
                                                     <%
-                                                        // Lấy danh sách khoa từ request
-                                                        ArrayList<Giang_Vien> gvList = null;
-                                                        if (idlop != null) {
-                                                            if (idlop.equals(lop.getId())) {
-                                                                gvList = (ArrayList<Giang_Vien>) request.getAttribute("lopse");
-                                                            } else {
-                                                                gvList = (ArrayList<Giang_Vien>) request.getAttribute("lopol");
-                                                            }
-
-                                                        } else {
-                                                            gvList = (ArrayList<Giang_Vien>) new Giang_Vien_dao().getGiangVien_by_KhoaID(lop.getKhoaID());
-                                                        }
-
-                                                        // Kiểm tra nếu khoaList không null
                                                         if (gvList != null) {
                                                             for (Giang_Vien g : gvList) {
                                                                 selected = (lop.getGiangVienID().equals(g.getId())) ? "selected" : "";
                                                     %>
-                                                    <option value="<%=g.getId()%>" <%= selected%>>  <%= g.getId().toUpperCase()%> - <%=g.getHoTen()%>
+                                                    <option value="<%= g.getId()%>" <%= selected%>> <%= g.getId().toUpperCase()%> - <%= g.getHoTen()%>
                                                     </option>
                                                     <%
                                                             }
@@ -451,15 +453,11 @@
                                             <li class="table-header-item table-item-content width_5">
                                                 <select name="khoahocmoi" class="select-covan">
                                                     <%
-                                                        // Lấy danh sách khoa từ request
-                                                        ArrayList<Khoa_Hoc> khList = (ArrayList<Khoa_Hoc>) request.getAttribute("khList");
-
-                                                        // Kiểm tra nếu khoaList không null
-                                                        if (khList != null) {
-                                                            for (Khoa_Hoc kh : khList) {
+                                                        if (khList1 != null) {
+                                                            for (Khoa_Hoc kh : khList1) {
                                                                 selected = (kh.getId() == lop.getKhoaHocID()) ? "selected" : "";
                                                     %>
-                                                    <option value="<%=kh.getId()%>" <%= selected%>>  <%= kh.getNamBD()%>-<%=kh.getNamKT()%>
+                                                    <option value="<%= kh.getId()%>" <%= selected%>> <%= kh.getNamBD()%>-<%= kh.getNamKT()%>
                                                     </option>
                                                     <%
                                                             }
@@ -469,7 +467,7 @@
                                             </li>
                                             <li class="table-header-item table-item-content width_6">
                                                 <button onclick="confirmLink(event, 'Xác nhận lưu?')" class="button button-edit">
-                                                    <svg class="save-icon"  version="1.1" id="Layer_1" viewBox="0 0 492.308 492.308" xml:space="preserve">
+                                                    <svg class="save-icon" version="1.1" id="Layer_1" viewBox="0 0 492.308 492.308" xml:space="preserve">
                                                     <g>
                                                     <g>
                                                     <path d="M330.784,0H32.264v300.611v64.514v127.183h427.779V129.255L330.784,0z M336.553,33.615l89.874,89.871h-89.874V33.615z     M51.957,320.303h146l-53.548-53.548l17.769-17.769l83.885,83.88l-83.885,83.885l-17.769-17.774l53.548-53.543h-146V320.303z     M440.351,472.615H51.957v-107.49h98.462l-33.856,33.851l45.615,45.62l111.731-111.731L162.178,221.139l-45.615,45.615    l33.856,33.856H51.957V19.692h264.904v123.486h123.49V472.615z"/>
@@ -493,13 +491,14 @@
                                             </li>
                                         </ul>
                                     </form>
-                                    <%                                                            i++;
-                                                    }
+                                    <%
+                                                    i++;
                                                 }
                                             }
                                         }
-
                                     %>
+
+
                                     <form  action="school_lop" method="get"  onsubmit="return validateForm()">
                                         <ul id="open" style="display:none" class="table-header-list">
                                             <input name="wrap" value="wrap<%=i%>" type="hidden">
@@ -617,6 +616,31 @@
                 });
             </script>
             <%%>
+
+
+            <script>
+                function loadGiangVien(khoaID, select) {
+                    if (khoaID) {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", "getGiangVienByKhoa?khoaID=" + khoaID, true);
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                var gvList = JSON.parse(xhr.responseText);
+                                var gvmoiSelect = document.getElementById(select);
+                                gvmoiSelect.innerHTML = ""; // Xóa các tùy chọn hiện tại
+
+                                gvList.forEach(function (gv) {
+                                    var option = document.createElement("option");
+                                    option.value = gv.id; // Giả sử id là thuộc tính của Giang_Vien
+                                    option.text = gv.id.toUpperCase() + " - " + gv.hoTen; // Giả sử hoTen là thuộc tính của Giang_Vien
+                                    gvmoiSelect.add(option);
+                                });
+                            }
+                        };
+                        xhr.send();
+                    }
+                }
+            </script>
 
 
             <script>

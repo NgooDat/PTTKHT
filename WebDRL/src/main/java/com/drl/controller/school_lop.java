@@ -154,20 +154,20 @@ public class school_lop extends HttpServlet {
                             lop = new Lop_dao().getLop_by_KhoaID(khoaId);
                         }
 
-                        //Lọc giảng viên theo khoa trong bảng
-                        if (request.getParameter("idse") != null) {
-                            request.setAttribute("idse", request.getParameter("idse"));
-                            dsgv = (ArrayList<Giang_Vien>) new Giang_Vien_dao().getGiangVien_by_KhoaID(request.getParameter("idse"));
-                            request.setAttribute("lopse", dsgv);
-                            kh = new Khoa_dao().getKhoa_by_ID(request.getParameter("idse"));
-                            request.setAttribute("khse", kh);
-                            if (request.getParameter("ido") == null) {
-
-                            } else {
-                                dsgv2 = (ArrayList<Giang_Vien>) new Giang_Vien_dao().getGiangVien_by_KhoaID(request.getParameter("ido"));
-                            }
-                            request.setAttribute("lopol", dsgv2);
-                        }
+//                        //Lọc giảng viên theo khoa trong bảng
+//                        if (request.getParameter("idse") != null) {
+//                            request.setAttribute("idse", request.getParameter("idse"));
+//                            dsgv = (ArrayList<Giang_Vien>) new Giang_Vien_dao().getGiangVien_by_KhoaID(request.getParameter("idse"));
+//                            request.setAttribute("lopse", dsgv);
+//                            kh = new Khoa_dao().getKhoa_by_ID(request.getParameter("idse"));
+//                            request.setAttribute("khse", kh);
+//                            if (request.getParameter("ido") == null) {
+//
+//                            } else {
+//                                dsgv2 = (ArrayList<Giang_Vien>) new Giang_Vien_dao().getGiangVien_by_KhoaID(request.getParameter("ido"));
+//                            }
+//                            request.setAttribute("lopol", dsgv2);
+//                        }
                         
                         
 
