@@ -60,7 +60,7 @@ public class updateSV extends HttpServlet {
             case 1:
                 Sinh_Vien g = new Sinh_Vien_dao().getSinhVienById((String) request.getParameter("id"));
                 request.setAttribute("sv", g);
-                dispatcher = request.getRequestDispatcher("views/bcs/updatesv.jsp");
+                dispatcher = request.getRequestDispatcher("views/school/updatesv.jsp");
                 dispatcher.forward(request, response);
                 break;
             case 2:
@@ -72,7 +72,7 @@ public class updateSV extends HttpServlet {
 
                     } else {
                         request.setAttribute("sv", gv);
-                        dispatcher = request.getRequestDispatcher("views/bcs/updatesv.jsp");
+                        dispatcher = request.getRequestDispatcher("views/school/updatesv.jsp");
                         dispatcher.forward(request, response);
                     }
                 } else {
@@ -89,7 +89,7 @@ public class updateSV extends HttpServlet {
                     } else {
                         Sinh_Vien gh = new Sinh_Vien_dao().getSinhVienById((String) request.getAttribute("id"));
                         request.setAttribute("sv", gh);
-                        dispatcher = request.getRequestDispatcher("views/bcs/updatesv.jsp");
+                        dispatcher = request.getRequestDispatcher("views/school/updatesv.jsp");
                         dispatcher.forward(request, response);
                     }
                 } else {
@@ -103,7 +103,7 @@ public class updateSV extends HttpServlet {
                     } else {
                         Sinh_Vien gh = new Sinh_Vien_dao().getSinhVienById((String) request.getAttribute("id"));
                         request.setAttribute("sv", gh);
-                        dispatcher = request.getRequestDispatcher("views/bcs/updatesv.jsp");
+                        dispatcher = request.getRequestDispatcher("views/school/updatesv.jsp");
                         dispatcher.forward(request, response);
                     }
                 } else {
@@ -163,7 +163,7 @@ public class updateSV extends HttpServlet {
         
         
         HttpSession session = request.getSession(false); // Không tạo session mới nếu chưa có
-        if((int)session.getAttribute("rule")==4 || (int)session.getAttribute("rule")==5){
+        if((int)session.getAttribute("rule")==4 ){
              session.setAttribute("name", request.getParameter("hoTen"));
             response.sendRedirect("bcs-home?id=" + id);
            
